@@ -10,7 +10,7 @@ import lopatka1 from './rzeczy/lopatka1.jpeg';
 import lopatka2 from './rzeczy/lopatka2.jpeg';
 import foremki from './rzeczy/foremki.jpeg';
 import czapka from './rzeczy/czapka_z_daszkiem.jpeg';
-import { ImageState, WalizkaState } from "./WalizkaState";
+import { WalizkaState } from "./WalizkaState";
 
 interface ImagePropsType {
     offsetLeft: number,
@@ -25,28 +25,7 @@ const Image = styled('img')<ImagePropsType>`
     left: ${props => props.offsetLeft}px;
     top: ${props => props.offsetTop}px;
     ${props => props.zIndex === undefined ? '' : `z-index: ${props.zIndex};`}
-    /* transition: left 1s, top 1s; */
 `;
-
-interface ImageWrapperPropsType {
-    imageState: ImageState,
-}
-
-const ImageWrapper = observer((props: ImageWrapperPropsType) => {
-    const { imageState } = props;
-
-    return (
-        <Image
-            src={imageState.src}
-            width={100}
-            offsetLeft={imageState.offsetLeft}
-            offsetTop={imageState.offsetTop}
-            onMouseDown={imageState.onMouseDown}
-            draggable={false}
-            zIndex={10}
-        />
-    );
-});
 
 const WrapperAll = styled('div')`
     position: relative;
@@ -71,9 +50,15 @@ const ImagesList = observer((props: ImagesListPropsType) => {
 
     for (const imageState of props.wrapperState.allChilds) {
         out.push(
-            <ImageWrapper
+            <Image
                 key={imageState.src}
-                imageState={imageState}
+                src={imageState.src}
+                width={100}
+                offsetLeft={imageState.offsetLeft}
+                offsetTop={imageState.offsetTop}
+                onMouseDown={imageState.onMouseDown}
+                draggable={false}
+                zIndex={10}
             />
         )
     }
