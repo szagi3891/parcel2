@@ -10,7 +10,7 @@ import lopatka1 from './rzeczy/lopatka1.jpeg';
 import lopatka2 from './rzeczy/lopatka2.jpeg';
 import foremki from './rzeczy/foremki.jpeg';
 import czapka from './rzeczy/czapka_z_daszkiem.jpeg';
-import { WalizkaState } from "./WalizkaState";
+import { ImageState, WalizkaState } from "./WalizkaState";
 
 interface ImagePropsType {
     offsetLeft: number,
@@ -41,6 +41,27 @@ const ButtonResetAll = styled('button')`
     font-size: 20px;
 `;
 
+interface ImageWrapperPropsType {
+    imageState: ImageState,
+}
+
+const ImageWrapper = observer((props: ImageWrapperPropsType) => {
+    const { imageState } = props;
+
+    return (
+        <Image
+            key={imageState.src}
+            src={imageState.src}
+            width={100}
+            offsetLeft={imageState.offsetLeft}
+            offsetTop={imageState.offsetTop}
+            onMouseDown={imageState.onMouseDown}
+            draggable={false}
+            zIndex={10}
+        />
+    );
+});
+
 interface ImagesListPropsType {
     wrapperState: WalizkaState,
 }
@@ -50,15 +71,9 @@ const ImagesList = observer((props: ImagesListPropsType) => {
 
     for (const imageState of props.wrapperState.allChilds) {
         out.push(
-            <Image
+            <ImageWrapper
                 key={imageState.src}
-                src={imageState.src}
-                width={100}
-                offsetLeft={imageState.offsetLeft}
-                offsetTop={imageState.offsetTop}
-                onMouseDown={imageState.onMouseDown}
-                draggable={false}
-                zIndex={10}
+                imageState={imageState}
             />
         )
     }
@@ -70,6 +85,21 @@ const ImagesList = observer((props: ImagesListPropsType) => {
     );
 });
 
+interface LeftTopPropsType {
+    wrapperState: WalizkaState,
+}
+
+const LeftTop = observer((props: LeftTopPropsType) => {
+    const { wrapperState } = props;
+
+    return (
+        <>
+            <div>left = {wrapperState.offsetLeft}</div>
+            <div>top = {wrapperState.offsetTop}</div>
+        </>
+    )
+});
+
 export const Walizka = observer(() => {
     const [ wrapperState ] = React.useState(() => {
         const lista = [stroj, wiaderko1, wiaderko2, grabeczki, lopatka1, lopatka2, foremki, czapka];
@@ -78,8 +108,7 @@ export const Walizka = observer(() => {
 
     return (
         <WrapperAll onMouseMove={wrapperState.onMouseMove} onMouseUp={wrapperState.onMouseUp}>
-            <div>left = {wrapperState.offsetLeft}</div>
-            <div>top = {wrapperState.offsetTop}</div>
+            <LeftTop wrapperState={wrapperState} />
             <br/><br/>
             <ButtonResetAll onClick={wrapperState.resetAll}>Rozpakuj wszystko</ButtonResetAll>
             <br/><br/>
