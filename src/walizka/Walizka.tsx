@@ -19,12 +19,18 @@ interface ImagePropsType {
 }
 
 const Image = styled('img')<ImagePropsType>`
-    position: relative;
+    position: absolute;
+    background-color: blue;
     border: 1px solid black;
     padding: 1px;
     left: ${props => props.offsetLeft}px;
     top: ${props => props.offsetTop}px;
     ${props => props.zIndex === undefined ? '' : `z-index: ${props.zIndex};`}
+`;
+
+const ImageWalizka = styled('img')`
+    border: 1px solid black;
+    padding: 1px;
 `;
 
 const WrapperAll = styled('div')`
@@ -112,10 +118,10 @@ export const Walizka = observer(() => {
             <br/><br/>
             <ButtonResetAll onClick={wrapperState.resetAll}>Rozpakuj wszystko</ButtonResetAll>
             <br/><br/>
-            <ImagesList wrapperState={wrapperState} />
 
             <br/><br/>
-            <Image src={zielona_walizka} width={500} offsetLeft={0} offsetTop={0} />
+            <ImageWalizka src={zielona_walizka} width={500} />
+            <ImagesList wrapperState={wrapperState} />
         </WrapperAll>
     );
 });

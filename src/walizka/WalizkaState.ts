@@ -8,10 +8,18 @@ export class WalizkaState {
 
     @observable.ref currentHolding: ImageState | null = null;
 
-    readonly allChilds: Array<ImageState>;
+    @observable.ref allChilds: Array<ImageState>;
 
-    constructor(list: Array<string>) {
-        this.allChilds = list.map((src) => new ImageState(this, src));
+    constructor(private readonly listSrc: Array<string>) {
+        this.allChilds = this.createState(listSrc);
+    }
+
+    private createState(listSrc: Array<string>): Array<ImageState> {
+        return listSrc.map((src, index) => {
+            const offsetLeft = 102 * index;     //2 margin
+            const offsetTop = 100;
+            return new ImageState(this, src, offsetLeft, offsetTop);
+        });
     }
 
     @action onMouseMove = (e: React.MouseEvent<HTMLImageElement>) => {
@@ -37,12 +45,15 @@ export class WalizkaState {
         }
 
         this.currentHolding = current;
+
+        const allChilds = this.allChilds.filter((item) => item !== current);
+        allChilds.push(current);
+
+        this.allChilds = allChilds;
     }
 
     resetAll = () => {
-        for (const child of this.allChilds) {
-            child.reset();
-        }
+        this.allChilds = this.createState(this.listSrc);
     }
 }
 
@@ -61,7 +72,14 @@ export class ImageState {
 
     @observable drag: null | MouseDragType = null;
 
-    constructor(private readonly parent: WalizkaState, readonly src: string) {
+    constructor(
+        private readonly parent: WalizkaState,
+        readonly src: string,
+        staticOffsetLeft: number,
+        staticOffsetTop: number,
+    ) {
+        this.staticOffsetLeft = staticOffsetLeft;
+        this.staticOffsetTop = staticOffsetTop;
     }
 
     @action onMouseDown = () => {
