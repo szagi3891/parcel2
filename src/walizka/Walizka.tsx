@@ -10,6 +10,7 @@ import grabeczki from './rzeczy/grabeczki.jpeg';
 import lopatka1 from './rzeczy/lopatka1.jpeg';
 import lopatka2 from './rzeczy/lopatka2.jpeg';
 import foremki from './rzeczy/foremki.jpeg';
+import czapka from './rzeczy/czapka_z_daszkiem.jpeg';
 
 interface ImagePropsType {
     offsetLeft: number,
@@ -186,6 +187,7 @@ export const Walizka = observer(() => {
             <ImageWrapper parent={wrapperState} src={lopatka1} />
             <ImageWrapper parent={wrapperState} src={lopatka2} />
             <ImageWrapper parent={wrapperState} src={foremki} />
+            <ImageWrapper parent={wrapperState} src={czapka} />
 
             <br/><br/>
             <Image src={zielona_walizka} width={500} offsetLeft={0} offsetTop={0} />
