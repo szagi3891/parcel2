@@ -3,6 +3,7 @@ import { action, computed, observable } from "mobx";
 import { observer } from "mobx-react-lite";
 import React from "react";
 import zielona_walizka from './rzeczy/zielona_walizka.jpeg';
+import ding_src from 'url:./ding.mp3';
 import stroj from './rzeczy/stroj_kompielowy.webp';
 import wiaderko1 from './rzeczy/wiaderko1.jpeg';
 import wiaderko2 from './rzeczy/wiaderko2.jpeg';
@@ -117,9 +118,15 @@ class State {
     }
     
     eventEnd = () => {
-        this.staticOffsetLeft = this.offsetLeft;
-        this.staticOffsetTop = this.offsetTop;
-        this.drag = null;
+        if (this.drag !== null) {
+                
+            this.staticOffsetLeft = this.offsetLeft;
+            this.staticOffsetTop = this.offsetTop;
+            this.drag = null;
+
+            const audio = new Audio(ding_src);
+            audio.play();
+        }
     }
 
     @action reset = () => {
