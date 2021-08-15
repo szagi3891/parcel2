@@ -10,8 +10,14 @@ import lopatka1 from './rzeczy/lopatka1.jpeg';
 import lopatka2 from './rzeczy/lopatka2.jpeg';
 import foremki from './rzeczy/foremki.jpeg';
 import czapka from './rzeczy/czapka_z_daszkiem.jpeg';
+import foremeczki_do_piaseczku from './rzeczy/foremeczki_do_piaseczku.jpeg';
+import flamingobluzka from './rzeczy/flamingobluzka.jpeg';
+import spodenki from './rzeczy/spodenki.webp';
+import parasoleczka from './rzeczy/parasoleczka.jpeg';
+
 import { ImageState, WalizkaState } from "./WalizkaState";
 
+const lista = [stroj, wiaderko1, wiaderko2, grabeczki, lopatka1, lopatka2, foremki, czapka, foremeczki_do_piaseczku, flamingobluzka, spodenki, parasoleczka];
 interface ImagePropsType {
     zIndex?: number,
 }
@@ -106,7 +112,6 @@ const LeftTop = observer((props: LeftTopPropsType) => {
 
 export const Walizka = observer(() => {
     const [ wrapperState ] = React.useState(() => {
-        const lista = [stroj, wiaderko1, wiaderko2, grabeczki, lopatka1, lopatka2, foremki, czapka];
         return new WalizkaState(lista);
     });
 
