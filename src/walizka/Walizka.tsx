@@ -13,8 +13,6 @@ import czapka from './rzeczy/czapka_z_daszkiem.jpeg';
 import { ImageState, WalizkaState } from "./WalizkaState";
 
 interface ImagePropsType {
-    offsetLeft: number,
-    offsetTop: number,
     zIndex?: number,
 }
 
@@ -23,8 +21,6 @@ const Image = styled('img')<ImagePropsType>`
     background-color: blue;
     border: 1px solid black;
     padding: 1px;
-    left: ${props => props.offsetLeft}px;
-    top: ${props => props.offsetTop}px;
     ${props => props.zIndex === undefined ? '' : `z-index: ${props.zIndex};`}
 `;
 
@@ -59,11 +55,13 @@ const ImageWrapper = observer((props: ImageWrapperPropsType) => {
             key={imageState.src}
             src={imageState.src}
             width={100}
-            offsetLeft={imageState.offsetLeft}
-            offsetTop={imageState.offsetTop}
             onMouseDown={imageState.onMouseDown}
             draggable={false}
             zIndex={10}
+            style={{
+                left: `${imageState.offsetLeft}px`,
+                top:  `${imageState.offsetTop}px`
+            }}
         />
     );
 });

@@ -1,5 +1,5 @@
 import { action, computed, observable } from "mobx";
-import ding_src from 'url:./ding.mp3';
+// import ding_src from 'url:./ding.mp3';
 
 
 export class WalizkaState {
@@ -125,8 +125,8 @@ export class ImageState {
             this.staticOffsetTop = this.offsetTop;
             this.drag = null;
 
-            const audio = new Audio(ding_src);
-            audio.play();
+            // const audio = new Audio(ding_src);
+            // audio.play();
         }
     }
 
