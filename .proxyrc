@@ -1,0 +1,6 @@
+{
+    "/api": {
+        "target": "https://website-planetsportbet.prod.planetsportbet-multi.tup-cloud.com/",
+        "changeOrigin": true
+    }
+}

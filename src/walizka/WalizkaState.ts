@@ -1,4 +1,5 @@
 import { action, computed, observable } from "mobx";
+import { Fetch } from "./Fetch";
 // import ding_src from 'url:./ding.mp3';
 
 
@@ -10,8 +11,11 @@ export class WalizkaState {
 
     @observable.ref allChilds: Array<ImageState>;
 
+    readonly fetch: Fetch;
+
     constructor(private readonly listSrc: Array<string>) {
         this.allChilds = this.createState(listSrc);
+        this.fetch = new Fetch();
     }
 
     private createState(listSrc: Array<string>): Array<ImageState> {

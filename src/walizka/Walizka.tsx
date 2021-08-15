@@ -110,6 +110,30 @@ const LeftTop = observer((props: LeftTopPropsType) => {
     )
 });
 
+interface SportsPropsType {
+    wrapperState: WalizkaState,
+}
+
+const Sports = observer((props: SportsPropsType) => {
+    const { wrapperState } = props;
+
+    const result = wrapperState.fetch.listSport.get();
+
+    if (result.type === 'ready') {
+        return (
+            <div>
+                lista sportów {result.value.length}
+            </div>
+        );
+    }
+
+    return (
+        <div>
+           ladowanie ... 
+        </div>
+    );
+});
+
 export const Walizka = observer(() => {
     const [ wrapperState ] = React.useState(() => {
         return new WalizkaState(lista);
@@ -118,6 +142,8 @@ export const Walizka = observer(() => {
     return (
         <WrapperAll onMouseMove={wrapperState.onMouseMove} onMouseUp={wrapperState.onMouseUp}>
             <LeftTop wrapperState={wrapperState} />
+            <Sports wrapperState={wrapperState} />
+
             <br/><br/>
             <ButtonResetAll onClick={wrapperState.resetAll}>Rozpakuj wszystko</ButtonResetAll>
             <br/><br/>
