@@ -1,10 +1,11 @@
 import { observable } from "mobx";
 import { observer } from "mobx-react-lite";
 import React from "react";
+import { Jumbo } from "./jumbo/Jumbo";
 import { Main } from "./Main";
 import { Walizka } from "./walizka/Walizka";
 
-type TabType = 'tab1' | 'tab2';
+type TabType = 'tab1' | 'tab2' | 'jumbo';
 
 class Menu {
     @observable tab: TabType = 'tab1';
@@ -49,6 +50,10 @@ const RenderContent = observer((props: RenderContentPropsType) => {
         return <Walizka />;
     }
 
+    if (tabMenu.tab === 'jumbo') {
+        return <Jumbo />;
+    }
+
     return <div>Default</div>;
 });
 
@@ -68,6 +73,11 @@ export const App = observer(() => {
                     id="tab2"
                     onClick={tabMenu.onChange}
                     label="Label2"
+                />
+                <Button
+                    id="jumbo"
+                    onClick={tabMenu.onChange}
+                    label="Jumbo"
                 />
             </div>
             <RenderContent tabMenu={tabMenu} />
