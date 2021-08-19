@@ -1,108 +1,76 @@
-import styled from "@emotion/styled";
-import { computed, observable } from "mobx";
+import { observable } from "mobx";
 import { observer } from "mobx-react-lite";
 import React from "react";
+import { Main } from "./Main";
 import { Walizka } from "./walizka/Walizka";
 
-class State {
-    @observable counter: number = 10;
+type TabType = 'tab1' | 'tab2';
 
-    up = () => {
-        this.counter++;
-    }
+class Menu {
+    @observable tab: TabType = 'tab1';
 
-    down = () => {
-        this.counter--;
-    }
-
-    reset = () => {
-        this.counter = 0;
+    onChange = (id: TabType) => {
+        this.tab = id;
     }
 }
 
-class KolorState {
-    @observable reverse: boolean = false;
-
-    toogle = () => {
-        this.reverse = !this.reverse;
-    }
-
-    @computed get color(): string {
-        return this.reverse ? 'yellow' : 'purple';
-    }
-
-    @computed get backgroundColor(): string {
-        return this.reverse ? 'purple' : 'yellow';
-    }
+interface ButtonPropsType {
+    id: TabType,
+    label: string,
+    onClick: (id: TabType) => void,
 }
 
-const Current = styled('div')`
-    color: red;
-    border: 1px solid black;
-    background-color: blue;
-`;
+const Button = observer((props: ButtonPropsType) => {
+    const { id, label, onClick } = props;
 
-interface CorkiWrapperPropsType {
-    children: React.ReactNode,
-}
-
-const CorkiWrapper = observer((props: CorkiWrapperPropsType) => {
-    const [ state ] = React.useState(() => new KolorState());
-    const { children } = props;
-
-    return (
-        <Corki color={state.color} backgroudColor={state.backgroundColor} onClick={state.toogle}>
-            { children }
-        </Corki>
-    )
-});
-
-interface CorkiPropsType {
-    color: string,
-    backgroudColor: string,
-}
-const Corki = styled('div')<CorkiPropsType>`
-    border: 1px solid black;
-    margin: 20px 0;
-    padding: 5px;
-    color: ${props => props.color};
-    background-color: ${props => props.backgroudColor};
-    font-size: 20px;
-`;
-
-export const App = observer(() => {
-
-    const [state] = React.useState(() => new State());
-
-    const onClick = () => {
-        // alert('Aaaaaa !');
+    const buttonOnClick = () => {
+        onClick(id);
     };
 
     return (
+        <button onClick={buttonOnClick}>
+            { label }
+        </button>
+    )
+});
+
+interface RenderContentPropsType {
+    tabMenu: Menu
+}
+
+const RenderContent = observer((props: RenderContentPropsType) => {
+    const { tabMenu } = props;
+
+    if (tabMenu.tab === 'tab1') {
+        return <Main />;
+    }
+
+    if (tabMenu.tab === 'tab2') {
+        return <Walizka />;
+    }
+
+    return <div>Default</div>;
+});
+
+export const App = observer(() => {
+
+    const [ tabMenu ] = React.useState(() => new Menu());
+
+    return (
         <div>
-            <Current onClick={onClick}>
-                current = {state.counter}
-            </Current>
-            <CorkiWrapper>
-                Dzieci - to Weronika i Basia kotek miau. Serduszko. 6 3
-            </CorkiWrapper>
-
-            <CorkiWrapper>
-                Basia kotek.
-            </CorkiWrapper>
-
             <div>
-                <button onClick={state.up}>Up ..d</button>
+                <Button
+                    id="tab1"
+                    onClick={tabMenu.onChange}
+                    label="Label1"
+                />
+                <Button
+                    id="tab2"
+                    onClick={tabMenu.onChange}
+                    label="Label2"
+                />
             </div>
-            <div>
-                <button onClick={state.down}>Down ..</button>
-            </div>
-            <div>
-                <button onClick={state.reset}>reset</button>
-            </div>
-
-            <Walizka />
+            <RenderContent tabMenu={tabMenu} />
         </div>
     )
-
 });

@@ -3,12 +3,7 @@ import { render } from "react-dom";
 import { App } from "src/App";
 // import { fetchGeneral } from "./lib/fetch";
 
-render(
-    <div>
-        <h1>Program Weroniki i Basi</h1>
-        <App />
-    </div>
-, document.getElementById("root"));
+render(<App />, document.getElementById("root"));
 
 // //@ts-expect-error
 // if (module.hot) {
