@@ -14,10 +14,27 @@ import foremeczki_do_piaseczku from './rzeczy/foremeczki_do_piaseczku.jpeg';
 import flamingobluzka from './rzeczy/flamingobluzka.jpeg';
 import spodenki from './rzeczy/spodenki.webp';
 import parasoleczka from './rzeczy/parasoleczka.jpeg';
+import naramiaczkach from './rzeczy/sukienka-dziewczeca-z-dzerseju.jpeg';
+import spodniczka_teczowa from './rzeczy/spodniczka_teczowa.webp';
 
 import { ImageState, WalizkaState } from "./WalizkaState";
 
-const lista = [stroj, wiaderko1, wiaderko2, grabeczki, lopatka1, lopatka2, foremki, czapka, foremeczki_do_piaseczku, flamingobluzka, spodenki, parasoleczka];
+const lista = [
+    stroj,
+    wiaderko1,
+    wiaderko2,
+    grabeczki,
+    lopatka1,
+    lopatka2,
+    foremki,
+    czapka,
+    foremeczki_do_piaseczku,
+    flamingobluzka,
+    spodenki,
+    parasoleczka,
+    naramiaczkach,
+    spodniczka_teczowa
+];
 interface ImagePropsType {
     zIndex?: number,
 }
